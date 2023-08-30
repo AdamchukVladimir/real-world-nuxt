@@ -1,3 +1,4 @@
+import EventService from './services/EventService.js'
 const pkg = require('./package')
 
 module.exports = {
@@ -60,6 +61,16 @@ module.exports = {
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/
+        })
+      }
+    },
+    generate:{
+      //routes:['/event/5928101']
+      routes: () =>{
+        return EventService.getEvents().then(response=>{
+          return response.data.map(event=>{
+            return '/event/' + event.id
+          })
         })
       }
     }
